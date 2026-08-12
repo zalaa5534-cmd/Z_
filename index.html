@@ -45,7 +45,7 @@
         .welcome-section h1 { font-size: clamp(1.7rem, 4vw, 2.7rem); font-weight: 800; }
         .welcome-section p { margin-top: 8px; color: var(--muted); }
 
-        /* UPLOAD AREA - الدائرة بالشكل الأصلي بالظبط */
+        /* UPLOAD AREA */
         .upload-area {
             width: min(300px, 80vw); aspect-ratio: 1 / 1;
             display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
@@ -64,11 +64,13 @@
         .deploy-button { padding: 12px 26px; color: var(--white); background: var(--pink); border-radius: 12px; font-weight: 800; font-size: 1rem; }
         .deploy-button:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        /* RESULT BOX - نفس تصميم الصورة الأصلية بالضبط */
+        /* RESULT BOX */
         .deploy-result { margin-top: 20px; text-align: center; background: #0c0c12; padding: 22px; border-radius: 16px; border: 1px solid var(--pink); width: min(450px, 92vw); }
-        .success-message { color: #86efac; font-weight: 800; font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .live-link { color: var(--pink); font-size: 1.05rem; font-weight: 800; text-decoration: underline; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; word-break: break-all; }
-        .live-link:hover { opacity: 0.85; }
+        .success-message { color: #86efac; font-weight: 800; font-size: 1.1rem; margin-bottom: 12px; }
+        
+        .url-box { display: flex; gap: 8px; margin-top: 10px; }
+        .url-input { flex: 1; padding: 10px; background: #181824; border: 1px solid var(--border); border-radius: 8px; color: var(--pink); font-size: 0.8rem; outline: none; }
+        .copy-btn { padding: 10px 14px; background: var(--pink); color: var(--white); border-radius: 8px; font-weight: 700; font-size: 0.85rem; }
 
         /* AUTH MODAL */
         .modal { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -112,7 +114,6 @@
                 <p>Upload your project and deploy it.</p>
             </div>
 
-            <!-- الدائرة بالشكل والنص الأصلي -->
             <div id="upload-area" class="upload-area">
                 <span class="upload-text-main">Browse files to upload</span>
                 <span class="upload-text-or">or</span>
@@ -127,10 +128,12 @@
                 <button id="deploy-button" class="deploy-button" type="button">Deploy</button>
             </section>
 
-            <!-- نتيجة الـ Deploy بالشكل اللطيف والرابط المباشر -->
             <section id="deploy-result" class="deploy-result" hidden>
                 <div class="success-message">🎉 Your project is live!</div>
-                <a id="open-site-link" class="live-link" target="_blank" rel="noopener noreferrer">Open deployed site ↗</a>
+                <div class="url-box">
+                    <input id="generated-url" class="url-input" type="text" readonly>
+                    <button id="copy-url-btn" class="copy-btn" type="button">Copy 📋</button>
+                </div>
             </section>
         </section>
 
@@ -211,7 +214,8 @@
         const projectName = document.getElementById("project-name");
         const deployButton = document.getElementById("deploy-button");
         const deployResult = document.getElementById("deploy-result");
-        const openSiteLink = document.getElementById("open-site-link");
+        const generatedUrl = document.getElementById("generated-url");
+        const copyUrlBtn = document.getElementById("copy-url-btn");
 
         let isSignUp = false;
         let selectedFile = null;
@@ -288,7 +292,7 @@
             }
         });
 
-        // الـ Deploy وإنشاء الرابط الحقيقي المباشر
+        // تحويل الكود لـ Data URL عالمي يفتح في أي متصفح بالدنيا!
         deployButton.addEventListener("click", async () => {
             if (!fileContent) return;
 
@@ -302,11 +306,11 @@
                     createdAt: new Date()
                 });
 
-                // إنتاج رابط مباشر للملف يفتح فورا
-                const blob = new Blob([fileContent], { type: 'text/html' });
-                const liveUrl = URL.createObjectURL(blob);
+                // إنشاء رابط Data URL مستقل كلياً ورسمي
+                const encodedData = encodeURIComponent(fileContent);
+                const universalUrl = `data:text/html;charset=utf-8,${encodedData}`;
 
-                openSiteLink.href = liveUrl;
+                generatedUrl.value = universalUrl;
                 deployResult.hidden = false;
             } catch (err) {
                 alert("Deployment failed: " + err.message);
@@ -315,6 +319,16 @@
                 deployButton.disabled = false;
             }
         });
+
+        // زر النسخ
+        copyUrlBtn.addEventListener("click", () => {
+            generatedUrl.select();
+            navigator.clipboard.writeText(generatedUrl.value);
+            copyUrlBtn.textContent = "Copied! ✅";
+            setTimeout(() => copyUrlBtn.textContent = "Copy 📋", 2000);
+        });
     </script>
 </body>
 </html>
+
+        
