@@ -6,10 +6,6 @@
     <title>_ Z</title>
 
     <style>
-        /* =========================
-           _ Z — GLOBAL
-        ========================= */
-
         :root {
             --bg: #08080c;
             --bg-soft: #101016;
@@ -23,593 +19,79 @@
             --shadow: rgba(236, 72, 153, 0.25);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            width: 100%;
-            min-height: 100%;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* =========================
-           COMMON
-        ========================= */
-
-        button,
-        input {
-            font: inherit;
-        }
-
-        button {
-            border: 0;
-            cursor: pointer;
-        }
-
-        .screen {
-            width: 100%;
-            min-height: 100vh;
-        }
-
-        /* =========================
-           SPLASH SCREEN
-        ========================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; min-height: 100%; }
+        body { background: var(--bg); color: var(--text); font-family: "Trebuchet MS", "Segoe UI", sans-serif; overflow-x: hidden; }
+        button, input { font: inherit; }
+        button { border: 0; cursor: pointer; }
+        .screen { width: 100%; min-height: 100vh; }
 
         .splash-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(236, 72, 153, 0.16),
-                    transparent 45%
-                ),
-                var(--bg);
-
-            transition:
-                opacity 0.7s ease,
-                visibility 0.7s ease;
+            position: fixed; inset: 0; z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle at center, rgba(236, 72, 153, 0.16), transparent 45%), var(--bg);
+            transition: opacity 0.7s ease, visibility 0.7s ease;
         }
-
-        .splash-screen.hide {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .splash-content {
-            text-align: center;
-            animation: splashIn 0.9s ease forwards;
-        }
-
-        .brand-logo {
-            color: var(--white);
-            font-size: clamp(4.5rem, 15vw, 9rem);
-            font-weight: 900;
-            letter-spacing: -0.08em;
-            text-shadow:
-                0 0 25px rgba(236, 72, 153, 0.25),
-                0 0 70px rgba(236, 72, 153, 0.12);
-        }
-
-        .splash-text {
-            margin-top: 18px;
-            color: var(--muted);
-            font-size: 0.95rem;
-            letter-spacing: 0.04em;
-        }
+        .splash-screen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        .splash-content { text-align: center; animation: splashIn 0.9s ease forwards; }
+        .brand-logo { color: var(--white); font-size: clamp(4.5rem, 15vw, 9rem); font-weight: 900; letter-spacing: -0.08em; text-shadow: 0 0 25px rgba(236, 72, 153, 0.25), 0 0 70px rgba(236, 72, 153, 0.12); }
+        .splash-text { margin-top: 18px; color: var(--muted); font-size: 0.95rem; letter-spacing: 0.04em; }
 
         @keyframes splashIn {
-            from {
-                opacity: 0;
-                transform: translateY(12px) scale(0.96);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(12px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* =========================
-           MAIN SCREEN
-        ========================= */
+        .main-screen { position: relative; display: flex; flex-direction: column; background: radial-gradient(circle at 50% 45%, rgba(236, 72, 153, 0.07), transparent 38%), var(--bg); }
+        .top-bar { width: 100%; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; border-bottom: 1px solid var(--border); }
+        .small-logo { color: var(--white); font-size: 1.5rem; font-weight: 900; letter-spacing: -0.08em; }
+        .login-button { padding: 11px 22px; color: var(--white); background: rgba(236, 72, 153, 0.12); border: 1px solid rgba(236, 72, 153, 0.35); border-radius: 12px; transition: 0.2s ease; }
+        .login-button:hover { background: var(--pink); border-color: var(--pink); transform: translateY(-1px); }
 
-        .main-screen {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-
-            background:
-                radial-gradient(
-                    circle at 50% 45%,
-                    rgba(236, 72, 153, 0.07),
-                    transparent 38%
-                ),
-                var(--bg);
-        }
-
-        /* =========================
-           TOP BAR
-        ========================= */
-
-        .top-bar {
-            width: 100%;
-            height: 80px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 32px;
-
-            border-bottom: 1px solid var(--border);
-        }
-
-        .small-logo {
-            color: var(--white);
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: -0.08em;
-        }
-
-        .login-button {
-            padding: 11px 22px;
-
-            color: var(--white);
-            background: rgba(236, 72, 153, 0.12);
-
-            border: 1px solid rgba(236, 72, 153, 0.35);
-            border-radius: 12px;
-
-            transition:
-                background 0.2s ease,
-                border-color 0.2s ease,
-                transform 0.2s ease;
-        }
-
-        .login-button:hover {
-            background: var(--pink);
-            border-color: var(--pink);
-            transform: translateY(-1px);
-        }
-
-        /* =========================
-           MAIN CONTENT
-        ========================= */
-
-        .main-content {
-            flex: 1;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            padding: 70px 20px 80px;
-        }
-
-        .welcome-section {
-            text-align: center;
-            margin-bottom: 42px;
-        }
-
-        .welcome-section h1 {
-            font-size: clamp(1.7rem, 4vw, 2.7rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-        }
-
-        .welcome-section p {
-            margin-top: 10px;
-            color: var(--muted);
-            font-size: 1rem;
-        }
-
-        /* =========================
-           UPLOAD CIRCLE
-        ========================= */
+        .main-content { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 70px 20px 80px; }
+        .welcome-section { text-align: center; margin-bottom: 42px; }
+        .welcome-section h1 { font-size: clamp(1.7rem, 4vw, 2.7rem); font-weight: 800; letter-spacing: -0.03em; }
+        .welcome-section p { margin-top: 10px; color: var(--muted); font-size: 1rem; }
 
         .upload-area {
-            width: min(430px, 82vw);
-            aspect-ratio: 1 / 1;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            position: relative;
-
-            border-radius: 50%;
-
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(236, 72, 153, 0.09),
-                    rgba(20, 20, 28, 0.9) 65%
-                );
-
+            width: min(430px, 82vw); aspect-ratio: 1 / 1;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(236, 72, 153, 0.09), rgba(20, 20, 28, 0.9) 65%);
             border: 2px dashed rgba(236, 72, 153, 0.45);
-
-            box-shadow:
-                0 0 45px rgba(236, 72, 153, 0.08),
-                inset 0 0 50px rgba(236, 72, 153, 0.04);
-
-            transition:
-                transform 0.25s ease,
-                border-color 0.25s ease,
-                box-shadow 0.25s ease;
+            box-shadow: 0 0 45px rgba(236, 72, 153, 0.08), inset 0 0 50px rgba(236, 72, 153, 0.04);
+            transition: 0.25s ease;
         }
-
-        .upload-area:hover {
-            transform: scale(1.015);
-
-            border-color: var(--pink);
-
-            box-shadow:
-                0 0 70px rgba(236, 72, 153, 0.16),
-                inset 0 0 70px rgba(236, 72, 153, 0.06);
-        }
-
-        .upload-area.dragging {
-            transform: scale(1.03);
-            border-color: var(--pink);
-            box-shadow:
-                0 0 90px rgba(236, 72, 153, 0.25),
-                inset 0 0 80px rgba(236, 72, 153, 0.1);
-        }
-
-        .upload-content {
-            width: 75%;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-        }
-
-        .upload-option {
-            background: transparent;
-            color: var(--white);
-
-            font-weight: 700;
-            font-size: 1.05rem;
-
-            padding: 8px 12px;
-
-            transition:
-                color 0.2s ease,
-                transform 0.2s ease;
-        }
-
-        .upload-option:hover {
-            color: var(--pink);
-            transform: scale(1.04);
-        }
-
-        .upload-or {
-            margin: 10px 0;
-
-            color: var(--muted);
-
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* =========================
-           PROJECT PREVIEW
-        ========================= */
-
-        .project-preview {
-            width: min(560px, 90vw);
-
-            margin-top: 35px;
-            padding: 18px 20px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-
-            background: var(--card);
-
-            border: 1px solid var(--border);
-            border-radius: 16px;
-
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
-        }
-
-        .project-info {
-            min-width: 0;
-
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .project-label {
-            color: var(--muted);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .project-name {
-            color: var(--white);
-            font-weight: 700;
-
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .deploy-button {
-            flex-shrink: 0;
-
-            padding: 11px 22px;
-
-            color: var(--white);
-            background: var(--pink);
-
-            border-radius: 11px;
-
-            font-weight: 800;
-
-            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.2);
-
-            transition:
-                background 0.2s ease,
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-
-        .deploy-button:hover {
-            background: var(--pink-dark);
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 12px 30px rgba(236, 72, 153, 0.3);
-        }
-
-        /* =========================
-           DEPLOY RESULT
-        ========================= */
-
-        .deploy-result {
-            margin-top: 25px;
-
-            text-align: center;
-        }
-
-        .success-message {
-            color: #86efac;
-            font-weight: 700;
-        }
-
-        .project-link {
-            display: inline-block;
-
-            margin-top: 8px;
-
-            color: var(--pink);
-            text-decoration: none;
-
-            font-weight: 700;
-        }
-
-        .project-link:hover {
-            text-decoration: underline;
-        }
-
-        /* =========================
-           LOGIN MODAL
-        ========================= */
-
-        .modal {
-            position: fixed;
-            inset: 0;
-
-            z-index: 10000;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 20px;
-        }
-
-        .modal[hidden] {
-            display: none;
-        }
-
-        .modal-overlay {
-            position: absolute;
-            inset: 0;
-
-            background: rgba(0, 0, 0, 0.72);
-            backdrop-filter: blur(10px);
-        }
-
-        .login-card {
-            width: min(410px, 100%);
-
-            position: relative;
-            z-index: 1;
-
-            padding: 42px 30px 32px;
-
-            text-align: center;
-
-            background: #121219;
-
-            border: 1px solid var(--border);
-            border-radius: 22px;
-
-            box-shadow:
-                0 30px 100px rgba(0, 0, 0, 0.5),
-                0 0 50px rgba(236, 72, 153, 0.08);
-        }
-
-        .close-button {
-            position: absolute;
-
-            top: 14px;
-            right: 17px;
-
-            width: 34px;
-            height: 34px;
-
-            color: var(--muted);
-            background: transparent;
-
-            font-size: 1.7rem;
-            line-height: 1;
-
-            border-radius: 50%;
-
-            transition:
-                color 0.2s ease,
-                background 0.2s ease;
-        }
-
-        .close-button:hover {
-            color: var(--white);
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        .login-logo {
-            color: var(--pink);
-
-            font-size: 3rem;
-            font-weight: 900;
-
-            letter-spacing: -0.08em;
-
-            margin-bottom: 18px;
-        }
-
-        .login-card h2 {
-            color: var(--white);
-            font-size: 1.55rem;
-        }
-
-        .login-card p {
-            margin-top: 9px;
-
-            color: var(--muted);
-
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .google-login-button {
-            width: 100%;
-
-            margin-top: 25px;
-            padding: 13px 18px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-
-            color: #18181b;
-            background: var(--white);
-
-            border-radius: 12px;
-
-            font-weight: 800;
-
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-
-        .google-login-button:hover {
-            transform: translateY(-1px);
-
-            box-shadow:
-                0 10px 30px rgba(255, 255, 255, 0.1);
-        }
-
-        .google-icon {
-            font-weight: 900;
-            font-size: 1.15rem;
-        }
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 600px) {
-
-            .top-bar {
-                height: 70px;
-                padding: 0 18px;
-            }
-
-            .main-content {
-                padding-top: 50px;
-            }
-
-            .welcome-section {
-                margin-bottom: 32px;
-            }
-
-            .welcome-section h1 {
-                font-size: 1.55rem;
-            }
-
-            .welcome-section p {
-                font-size: 0.9rem;
-            }
-
-            .upload-area {
-                width: min(340px, 86vw);
-            }
-
-            .upload-option {
-                font-size: 0.92rem;
-            }
-
-            .project-preview {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .deploy-button {
-                width: 100%;
-            }
-
-            .login-card {
-                padding: 38px 22px 25px;
-            }
-        }
+        .upload-content { width: 75%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .upload-option { background: transparent; color: var(--white); font-weight: 700; font-size: 1.05rem; padding: 8px 12px; transition: 0.2s ease; }
+        .upload-option:hover { color: var(--pink); transform: scale(1.04); }
+        .upload-or { margin: 10px 0; color: var(--muted); font-size: 0.9rem; font-weight: 500; }
+
+        .project-preview { width: min(560px, 90vw); margin-top: 35px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25); }
+        .project-info { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+        .project-label { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; }
+        .project-name { color: var(--white); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        .deploy-button { flex-shrink: 0; padding: 11px 22px; color: var(--white); background: var(--pink); border-radius: 11px; font-weight: 800; box-shadow: 0 8px 25px rgba(236, 72, 153, 0.2); transition: 0.2s ease; }
+        .deploy-button:hover { background: var(--pink-dark); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(236, 72, 153, 0.3); }
+
+        .deploy-result { margin-top: 25px; text-align: center; background: #101016; padding: 20px; border-radius: 12px; border: 1px solid var(--pink); }
+        .success-message { color: #86efac; font-weight: 700; margin-bottom: 8px; }
+        .project-link { display: inline-block; color: var(--pink); text-decoration: none; font-weight: 700; font-size: 1.1rem; }
+        .project-link:hover { text-decoration: underline; }
+
+        .modal { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .modal[hidden] { display: none; }
+        .modal-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(10px); }
+        .login-card { width: min(410px, 100%); position: relative; z-index: 1; padding: 42px 30px 32px; text-align: center; background: #121219; border: 1px solid var(--border); border-radius: 22px; }
+        .close-button { position: absolute; top: 14px; right: 17px; width: 34px; height: 34px; color: var(--muted); background: transparent; font-size: 1.7rem; border-radius: 50%; }
+        .login-logo { color: var(--pink); font-size: 3rem; font-weight: 900; margin-bottom: 18px; }
+        .google-login-button { width: 100%; margin-top: 25px; padding: 13px 18px; display: flex; align-items: center; justify-content: center; gap: 10px; color: #18181b; background: var(--white); border-radius: 12px; font-weight: 800; }
     </style>
 </head>
 
 <body>
 
-    <!-- =========================
-         SPLASH SCREEN
-    ========================== -->
     <section id="splash-screen" class="screen splash-screen">
         <div class="splash-content">
             <div class="brand-logo">_ Z</div>
@@ -617,412 +99,128 @@
         </div>
     </section>
 
-
-    <!-- =========================
-         MAIN APPLICATION
-    ========================== -->
     <main id="main-screen" class="screen main-screen">
-
-        <!-- Top Bar -->
         <header class="top-bar">
-
-            <div class="top-brand">
-                <span class="small-logo">_ Z</span>
-            </div>
-
-            <button id="login-button" class="login-button" type="button">
-                Sign in
-            </button>
-
+            <div class="top-brand"><span class="small-logo">_ Z</span></div>
+            <button id="login-button" class="login-button" type="button">Sign in</button>
         </header>
 
-
-        <!-- Main Content -->
         <section class="main-content">
-
             <div class="welcome-section">
                 <h1>Ready when you are, Ziad.</h1>
                 <p>Upload your project and deploy it.</p>
             </div>
 
-
-            <!-- Upload Circle -->
-            <div
-                id="upload-area"
-                class="upload-area"
-                role="button"
-                tabindex="0"
-                aria-label="Upload project"
-            >
-
+            <div id="upload-area" class="upload-area" role="button" tabindex="0">
                 <div class="upload-content">
-
-                    <!-- Files -->
-                    <button
-                        id="browse-files"
-                        class="upload-option upload-files"
-                        type="button"
-                    >
-                        Browse files to upload
-                    </button>
-
-                    <!-- OR -->
+                    <button id="browse-files" class="upload-option upload-files" type="button">Browse files to upload</button>
                     <span class="upload-or">or</span>
-
-                    <!-- Folder -->
-                    <button
-                        id="choose-folder"
-                        class="upload-option upload-folder"
-                        type="button"
-                    >
-                        or choose a folder
-                    </button>
-
+                    <button id="choose-folder" class="upload-option upload-folder" type="button">or choose a folder</button>
                 </div>
-
             </div>
 
-
-            <!-- Selected Project -->
-            <section
-                id="project-preview"
-                class="project-preview"
-                hidden
-            >
-
+            <section id="project-preview" class="project-preview" hidden>
                 <div class="project-info">
                     <span class="project-label">Selected project</span>
                     <span id="project-name" class="project-name"></span>
                 </div>
-
-                <button
-                    id="deploy-button"
-                    class="deploy-button"
-                    type="button"
-                >
-                    Deploy
-                </button>
-
+                <button id="deploy-button" class="deploy-button" type="button">Deploy</button>
             </section>
 
-
-            <!-- Deployment Result -->
-            <section
-                id="deploy-result"
-                class="deploy-result"
-                hidden
-            >
-
-                <p class="success-message">
-                    Your project is live.
-                </p>
-
-                <a
-                    id="project-link"
-                    class="project-link"
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Open deployed site
-                </a>
-
+            <section id="deploy-result" class="deploy-result" hidden>
+                <p class="success-message">🎉 Your project is live!</p>
+                <a id="project-link" class="project-link" href="#" target="_blank">Open deployed site ↗</a>
             </section>
-
         </section>
 
-
-        <!-- Hidden File Inputs -->
-        <input
-            id="file-input"
-            type="file"
-            multiple
-            hidden
-        >
-
-        <input
-            id="folder-input"
-            type="file"
-            webkitdirectory
-            directory
-            multiple
-            hidden
-        >
-
+        <input id="file-input" type="file" multiple hidden>
+        <input id="folder-input" type="file" webkitdirectory directory multiple hidden>
     </main>
 
-
-    <!-- =========================
-         LOGIN MODAL
-    ========================== -->
-    <div
-        id="login-modal"
-        class="modal"
-        hidden
-    >
-
+    <div id="login-modal" class="modal" hidden>
         <div class="modal-overlay"></div>
-
         <div class="login-card">
-
-            <button
-                id="close-login"
-                class="close-button"
-                type="button"
-                aria-label="Close"
-            >
-                ×
-            </button>
-
+            <button id="close-login" class="close-button" type="button">×</button>
             <div class="login-logo">_ Z</div>
-
             <h2>Sign in to _ Z</h2>
-
-            <p>
-                Sign in with your Google account to continue.
-            </p>
-
-            <button
-                id="google-login"
-                class="google-login-button"
-                type="button"
-            >
-                <span class="google-icon">G</span>
-                Continue with Google
+            <p>Sign in with your Google account to continue.</p>
+            <button id="google-login" class="google-login-button" type="button">
+                <span class="google-icon">G</span> Continue with Google
             </button>
-
         </div>
-
     </div>
 
-
-    <!-- JavaScript -->
     <script>
-        // =========================
-        // _ Z — MAIN SCRIPT
-        // =========================
-
         document.addEventListener("DOMContentLoaded", () => {
-
-            // =========================
-            // ELEMENTS
-            // =========================
-
             const splashScreen = document.getElementById("splash-screen");
-
             const loginButton = document.getElementById("login-button");
             const loginModal = document.getElementById("login-modal");
             const closeLogin = document.getElementById("close-login");
             const modalOverlay = document.querySelector(".modal-overlay");
-            const googleLogin = document.getElementById("google-login");
-
-            const uploadArea = document.getElementById("upload-area");
 
             const browseFiles = document.getElementById("browse-files");
             const chooseFolder = document.getElementById("choose-folder");
-
             const fileInput = document.getElementById("file-input");
             const folderInput = document.getElementById("folder-input");
 
             const projectPreview = document.getElementById("project-preview");
             const projectName = document.getElementById("project-name");
+            const deployButton = document.getElementById("deploy-button");
+            const deployResult = document.getElementById("deploy-result");
+            const projectLink = document.getElementById("project-link");
 
-            // =========================
-            // SPLASH SCREEN
-            // =========================
+            let currentFile = null;
 
-            setTimeout(() => {
-                splashScreen.classList.add("hide");
-            }, 3000);
+            setTimeout(() => { splashScreen.classList.add("hide"); }, 2000);
 
+            loginButton.addEventListener("click", () => loginModal.hidden = false);
+            closeLogin.addEventListener("click", () => loginModal.hidden = true);
+            modalOverlay.addEventListener("click", () => loginModal.hidden = true);
 
-            // =========================
-            // LOGIN MODAL
-            // =========================
-
-            function openLoginModal() {
-                loginModal.hidden = false;
-            }
-
-            function closeLoginModal() {
-                loginModal.hidden = true;
-            }
-
-            loginButton.addEventListener("click", openLoginModal);
-
-            closeLogin.addEventListener("click", closeLoginModal);
-
-            modalOverlay.addEventListener("click", closeLoginModal);
-
-
-            // =========================
-            // GOOGLE LOGIN
-            // =========================
-
-            googleLogin.addEventListener("click", () => {
-
-                alert(
-                    "Google Sign-In will be connected when we set up authentication."
-                );
-
-            });
-
-
-            // =========================
-            // FILE UPLOAD
-            // =========================
-
-            browseFiles.addEventListener("click", (event) => {
-
-                event.stopPropagation();
-
-                fileInput.click();
-
-            });
-
-
-            // =========================
-            // FOLDER UPLOAD
-            // =========================
-
-            chooseFolder.addEventListener("click", (event) => {
-
-                event.stopPropagation();
-
-                folderInput.click();
-
-            });
-
-
-            // =========================
-            // HANDLE FILES
-            // =========================
+            browseFiles.addEventListener("click", (e) => { e.stopPropagation(); fileInput.click(); });
+            chooseFolder.addEventListener("click", (e) => { e.stopPropagation(); folderInput.click(); });
 
             fileInput.addEventListener("change", () => {
-
-                if (!fileInput.files.length) {
-                    return;
+                if (fileInput.files.length) {
+                    currentFile = fileInput.files[0];
+                    projectName.textContent = currentFile.name;
+                    projectPreview.hidden = false;
+                    deployResult.hidden = true;
                 }
-
-                handleSelectedFiles(fileInput.files);
-
             });
-
-
-            // =========================
-            // HANDLE FOLDER
-            // =========================
 
             folderInput.addEventListener("change", () => {
-
-                if (!folderInput.files.length) {
-                    return;
+                if (folderInput.files.length) {
+                    currentFile = folderInput.files[0];
+                    projectName.textContent = currentFile.webkitRelativePath.split("/")[0] || "Folder";
+                    projectPreview.hidden = false;
+                    deployResult.hidden = true;
                 }
-
-                handleSelectedFiles(folderInput.files);
-
             });
 
+            // التشغيل الحقيقي لزرار الـ Deploy! 🚀
+            deployButton.addEventListener("click", () => {
+                if (!currentFile) return;
 
-            // =========================
-            // SELECTED PROJECT
-            // =========================
+                deployButton.textContent = "Deploying...";
 
-            function handleSelectedFiles(files) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    const blob = new Blob([content], { type: 'text/html' });
+                    const blobUrl = URL.createObjectURL(blob);
 
-                const firstFile = files[0];
+                    projectLink.href = blobUrl;
+                    
+                    setTimeout(() => {
+                        deployButton.textContent = "Deploy";
+                        deployResult.hidden = false;
+                    }, 1000);
+                };
 
-                let name = "Project";
-
-                // Folder selection
-                if (
-                    firstFile.webkitRelativePath &&
-                    firstFile.webkitRelativePath.includes("/")
-                ) {
-
-                    name = firstFile.webkitRelativePath.split("/")[0];
-
-                }
-
-                // Normal file selection
-                else if (files.length === 1) {
-
-                    name = firstFile.name;
-
-                }
-
-                else {
-
-                    name = `${files.length} files`;
-
-                }
-
-
-                projectName.textContent = name;
-
-                projectPreview.hidden = false;
-
-                console.log("Selected files:", files);
-
-            }
-
-
-            // =========================
-            // DRAG & DROP
-            // =========================
-
-            uploadArea.addEventListener("dragover", (event) => {
-
-                event.preventDefault();
-
-                uploadArea.classList.add("dragging");
-
+                reader.readAsText(currentFile);
             });
-
-
-            uploadArea.addEventListener("dragleave", () => {
-
-                uploadArea.classList.remove("dragging");
-
-            });
-
-
-            uploadArea.addEventListener("drop", (event) => {
-
-                event.preventDefault();
-
-                uploadArea.classList.remove("dragging");
-
-                const files = event.dataTransfer.files;
-
-                if (!files.length) {
-                    return;
-                }
-
-                handleSelectedFiles(files);
-
-            });
-
-
-            // =========================
-            // KEYBOARD ACCESSIBILITY
-            // =========================
-
-            uploadArea.addEventListener("keydown", (event) => {
-
-                if (event.key === "Enter" || event.key === " ") {
-
-                    event.preventDefault();
-
-                    fileInput.click();
-
-                }
-
-            });
-
         });
     </script>
 </body>
 </html>
-
-
