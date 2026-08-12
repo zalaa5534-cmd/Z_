@@ -3,28 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>_ Z</title>
+    <title>_ Z Platform</title>
 
     <style>
         :root {
             --bg: #08080c;
-            --bg-soft: #101016;
             --card: #14141c;
             --pink: #ec4899;
-            --pink-dark: #db2777;
             --white: #ffffff;
-            --text: #f5f5f7;
             --muted: #a1a1aa;
             --border: rgba(255, 255, 255, 0.08);
-            --shadow: rgba(236, 72, 153, 0.25);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { width: 100%; min-height: 100%; }
-        body { background: var(--bg); color: var(--text); font-family: "Trebuchet MS", "Segoe UI", sans-serif; overflow-x: hidden; }
+        body { background: var(--bg); color: #f5f5f7; font-family: "Segoe UI", system-ui, sans-serif; overflow-x: hidden; min-height: 100vh; }
         button, input { font: inherit; }
         button { border: 0; cursor: pointer; }
-        .screen { width: 100%; min-height: 100vh; }
 
         /* SPLASH SCREEN */
         .splash-screen {
@@ -34,210 +28,297 @@
             transition: opacity 0.7s ease, visibility 0.7s ease;
         }
         .splash-screen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
-        .splash-content { text-align: center; animation: splashIn 0.9s ease forwards; }
-        .brand-logo { color: var(--white); font-size: clamp(4.5rem, 15vw, 9rem); font-weight: 900; letter-spacing: -0.08em; text-shadow: 0 0 25px rgba(236, 72, 153, 0.25), 0 0 70px rgba(236, 72, 153, 0.12); }
-        .splash-text { margin-top: 18px; color: var(--muted); font-size: 0.95rem; letter-spacing: 0.04em; }
-
-        @keyframes splashIn {
-            from { opacity: 0; transform: translateY(12px) scale(0.96); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
+        .brand-logo { color: var(--white); font-size: clamp(4.5rem, 15vw, 9rem); font-weight: 900; letter-spacing: -0.08em; text-shadow: 0 0 25px rgba(236, 72, 153, 0.25); }
+        .splash-text { margin-top: 18px; color: var(--muted); font-size: 0.95rem; text-align: center; }
 
         /* MAIN APP */
-        .main-screen { position: relative; display: flex; flex-direction: column; background: radial-gradient(circle at 50% 45%, rgba(236, 72, 153, 0.07), transparent 38%), var(--bg); }
+        .main-screen { position: relative; display: flex; flex-direction: column; min-height: 100vh; }
         .top-bar { width: 100%; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; border-bottom: 1px solid var(--border); }
-        .small-logo { color: var(--white); font-size: 1.5rem; font-weight: 900; letter-spacing: -0.08em; }
-        .login-button { padding: 11px 22px; color: var(--white); background: rgba(236, 72, 153, 0.12); border: 1px solid rgba(236, 72, 153, 0.35); border-radius: 12px; transition: 0.2s ease; }
-        .login-button:hover { background: var(--pink); border-color: var(--pink); transform: translateY(-1px); }
+        .small-logo { color: var(--white); font-size: 1.5rem; font-weight: 900; }
+        .user-status { display: flex; align-items: center; gap: 12px; }
+        .user-email { font-size: 0.9rem; color: var(--pink); font-weight: 600; }
+        .login-button { padding: 11px 22px; color: var(--white); background: rgba(236, 72, 153, 0.12); border: 1px solid rgba(236, 72, 153, 0.35); border-radius: 12px; transition: 0.3s; }
+        .login-button:hover { background: var(--pink); }
 
-        .main-content { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 70px 20px 80px; }
-        .welcome-section { text-align: center; margin-bottom: 42px; }
-        .welcome-section h1 { font-size: clamp(1.7rem, 4vw, 2.7rem); font-weight: 800; letter-spacing: -0.03em; }
-        .welcome-section p { margin-top: 10px; color: var(--muted); font-size: 1rem; }
+        .main-content { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
+        .welcome-section { text-align: center; margin-bottom: 35px; }
+        .welcome-section h1 { font-size: clamp(1.7rem, 4vw, 2.7rem); font-weight: 800; }
+        .welcome-section p { margin-top: 10px; color: var(--muted); }
 
-        /* UPLOAD CIRCLE */
+        /* UPLOAD AREA */
         .upload-area {
-            width: min(430px, 82vw); aspect-ratio: 1 / 1;
+            width: min(320px, 80vw); aspect-ratio: 1 / 1;
             display: flex; align-items: center; justify-content: center;
-            position: relative; border-radius: 50%;
-            background: radial-gradient(circle at center, rgba(236, 72, 153, 0.09), rgba(20, 20, 28, 0.9) 65%);
-            border: 2px dashed rgba(236, 72, 153, 0.45);
-            box-shadow: 0 0 45px rgba(236, 72, 153, 0.08), inset 0 0 50px rgba(236, 72, 153, 0.04);
-            transition: 0.25s ease;
+            border-radius: 50%; background: radial-gradient(circle at center, rgba(236, 72, 153, 0.09), rgba(20, 20, 28, 0.9) 65%);
+            border: 2px dashed rgba(236, 72, 153, 0.45); cursor: pointer; transition: 0.3s ease;
         }
-        .upload-content { width: 75%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .upload-option { background: transparent; color: var(--white); font-weight: 700; font-size: 1.05rem; padding: 8px 12px; transition: 0.2s ease; }
-        .upload-option:hover { color: var(--pink); transform: scale(1.04); }
-        .upload-or { margin: 10px 0; color: var(--muted); font-size: 0.9rem; font-weight: 500; }
+        .upload-area:hover { transform: scale(1.02); border-color: var(--pink); }
+        .upload-option { background: transparent; color: var(--white); font-weight: 700; padding: 8px 12px; }
 
         /* PREVIEW & RESULT */
-        .project-preview { width: min(560px, 90vw); margin-top: 35px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25); }
-        .project-info { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
-        .project-label { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; }
-        .project-name { color: var(--white); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        .deploy-button { flex-shrink: 0; padding: 11px 22px; color: var(--white); background: var(--pink); border-radius: 11px; font-weight: 800; box-shadow: 0 8px 25px rgba(236, 72, 153, 0.2); transition: 0.2s ease; }
-        .deploy-button:hover { background: var(--pink-dark); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(236, 72, 153, 0.3); }
+        .project-preview { width: min(500px, 90vw); margin-top: 30px; padding: 18px; display: flex; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--border); border-radius: 16px; }
+        .project-name { color: var(--white); font-weight: 700; }
+        .deploy-button { padding: 10px 20px; color: var(--white); background: var(--pink); border-radius: 10px; font-weight: 800; }
+        .deploy-button:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        .deploy-result { margin-top: 25px; text-align: center; background: #101016; padding: 20px; border-radius: 12px; border: 1px solid var(--pink); }
+        .deploy-result { margin-top: 25px; text-align: center; background: #101016; padding: 20px; border-radius: 12px; border: 1px solid var(--pink); width: min(500px, 90vw); }
         .success-message { color: #86efac; font-weight: 700; margin-bottom: 8px; }
-        .project-link { display: inline-block; color: var(--pink); text-decoration: none; font-weight: 700; font-size: 1.05rem; word-break: break-all; cursor: pointer; }
-        .project-link:hover { text-decoration: underline; }
+        .project-btn { display: inline-block; background: var(--pink); color: var(--white); text-decoration: none; font-weight: 700; padding: 12px 24px; border-radius: 8px; margin-top: 10px; transition: 0.2s; }
+        .project-btn:hover { opacity: 0.9; }
 
-        /* MODAL */
+        /* AUTH MODAL */
         .modal { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .modal[hidden] { display: none; }
-        .modal-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(10px); }
-        .login-card { width: min(410px, 100%); position: relative; z-index: 1; padding: 42px 30px 32px; text-align: center; background: #121219; border: 1px solid var(--border); border-radius: 22px; }
-        .close-button { position: absolute; top: 14px; right: 17px; width: 34px; height: 34px; color: var(--muted); background: transparent; font-size: 1.7rem; border-radius: 50%; }
-        .login-logo { color: var(--pink); font-size: 3rem; font-weight: 900; margin-bottom: 18px; }
-        .google-login-button { width: 100%; margin-top: 25px; padding: 13px 18px; display: flex; align-items: center; justify-content: center; gap: 10px; color: #18181b; background: var(--white); border-radius: 12px; font-weight: 800; }
+        .modal-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); }
+        .login-card { width: min(380px, 100%); position: relative; z-index: 1; padding: 30px; text-align: center; background: #121219; border: 1px solid var(--border); border-radius: 20px; }
+        .close-button { position: absolute; top: 12px; right: 15px; color: var(--muted); background: transparent; font-size: 1.5rem; }
+        .auth-form { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .auth-input { width: 100%; padding: 12px; background: #1a1a24; border: 1px solid var(--border); border-radius: 8px; color: var(--white); outline: none; }
+        .auth-submit { width: 100%; padding: 12px; background: var(--pink); color: var(--white); font-weight: 700; border-radius: 8px; }
+        .divider { margin: 15px 0; color: var(--muted); font-size: 0.8rem; }
+        .google-login-button { width: 100%; padding: 11px; display: flex; align-items: center; justify-content: center; gap: 10px; color: #18181b; background: var(--white); border-radius: 8px; font-weight: 800; }
+        .auth-toggle { margin-top: 15px; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
+        .auth-toggle span { color: var(--pink); font-weight: 700; }
     </style>
 </head>
 
 <body>
 
-    <section id="splash-screen" class="screen splash-screen">
+    <!-- Splash Screen -->
+    <section id="splash-screen" class="splash-screen">
         <div class="splash-content">
             <div class="brand-logo">_ Z</div>
-            <p class="splash-text">Built by Ziad. Ready to deploy.</p>
+            <p class="splash-text">Built by Ziad. Powered by Firebase.</p>
         </div>
     </section>
 
-    <main id="main-screen" class="screen main-screen">
+    <!-- Main Screen -->
+    <main class="main-screen">
         <header class="top-bar">
-            <div class="top-brand"><span class="small-logo">_ Z</span></div>
-            <button id="login-button" class="login-button" type="button">Sign in</button>
+            <span class="small-logo">_ Z</span>
+            <div class="user-status">
+                <span id="user-display" class="user-email"></span>
+                <button id="login-button" class="login-button" type="button">Sign in</button>
+            </div>
         </header>
 
         <section class="main-content">
             <div class="welcome-section">
                 <h1>Ready when you are, Ziad.</h1>
-                <p>Upload your project and deploy it.</p>
+                <p>Upload your HTML file and launch it instantly.</p>
             </div>
 
-            <div id="upload-area" class="upload-area" role="button" tabindex="0">
+            <div id="upload-area" class="upload-area">
                 <div class="upload-content">
-                    <button id="browse-files" class="upload-option upload-files" type="button">Browse files to upload</button>
-                    <span class="upload-or">or</span>
-                    <button id="choose-folder" class="upload-option upload-folder" type="button">or choose a folder</button>
+                    <span class="upload-option">Browse file to upload</span>
                 </div>
             </div>
 
             <section id="project-preview" class="project-preview" hidden>
-                <div class="project-info">
-                    <span class="project-label">Selected project</span>
-                    <span id="project-name" class="project-name"></span>
-                </div>
+                <span id="project-name" class="project-name"></span>
                 <button id="deploy-button" class="deploy-button" type="button">Deploy</button>
             </section>
 
             <section id="deploy-result" class="deploy-result" hidden>
-                <p class="success-message">🎉 Your project is live!</p>
-                <!-- الرابط بقى نضيف وشيك -->
-                <a id="project-link" class="project-link" target="_blank">https://ziad-app.vercel.app/project</a>
+                <p class="success-message">🎉 Deployment Successful!</p>
+                <button id="open-project-btn" class="project-btn" type="button">Launch Live Project 🚀</button>
             </section>
         </section>
 
-        <input id="file-input" type="file" multiple hidden>
-        <input id="folder-input" type="file" webkitdirectory directory multiple hidden>
+        <input id="file-input" type="file" accept=".html" hidden>
     </main>
 
+    <!-- Modal التسجيل -->
     <div id="login-modal" class="modal" hidden>
         <div class="modal-overlay"></div>
         <div class="login-card">
             <button id="close-login" class="close-button" type="button">×</button>
-            <div class="login-logo">_ Z</div>
-            <h2>Sign in to _ Z</h2>
-            <p>Sign in with your Google account to continue.</p>
+            <h2 id="modal-title">Sign In</h2>
+            
+            <form id="auth-form" class="auth-form">
+                <input id="auth-email" class="auth-input" type="email" placeholder="Email address" required>
+                <input id="auth-password" class="auth-input" type="password" placeholder="Password" required>
+                <button id="auth-submit" class="auth-submit" type="submit">Sign In</button>
+            </form>
+
+            <div class="divider">OR</div>
+
             <button id="google-login" class="google-login-button" type="button">
-                <span class="google-icon">G</span> Continue with Google
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                Continue with Google
             </button>
+
+            <p id="auth-toggle" class="auth-toggle">Don't have an account? <span>Sign Up</span></p>
         </div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const splashScreen = document.getElementById("splash-screen");
-            const loginButton = document.getElementById("login-button");
-            const loginModal = document.getElementById("login-modal");
-            const closeLogin = document.getElementById("close-login");
-            const modalOverlay = document.querySelector(".modal-overlay");
+    <!-- Firebase SDK Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword, 
+            signInWithPopup, 
+            GoogleAuthProvider, 
+            onAuthStateChanged,
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-            const browseFiles = document.getElementById("browse-files");
-            const chooseFolder = document.getElementById("choose-folder");
-            const fileInput = document.getElementById("file-input");
-            const folderInput = document.getElementById("folder-input");
+        // إعدادات Firebase الخاصة ببرنامج زياد
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlJqZTaTOt2FqvSN4VlMKqI4BtELlzy5s",
+            authDomain: "ziad-app-414b7.firebaseapp.com",
+            projectId: "ziad-app-414b7",
+            storageBucket: "ziad-app-414b7.firebasestorage.app",
+            messagingSenderId: "418478296000",
+            appId: "1:418478296000:web:68be95f3cf491eae0ed625",
+            measurementId: "G-01N4SMDGX0"
+        };
 
-            const projectPreview = document.getElementById("project-preview");
-            const projectName = document.getElementById("project-name");
-            const deployButton = document.getElementById("deploy-button");
-            const deployResult = document.getElementById("deploy-result");
-            const projectLink = document.getElementById("project-link");
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const googleProvider = new GoogleAuthProvider();
 
-            let currentFile = null;
-            let loadedContent = "";
+        // العناصر الأساسية
+        const splashScreen = document.getElementById("splash-screen");
+        const loginButton = document.getElementById("login-button");
+        const userDisplay = document.getElementById("user-display");
+        const loginModal = document.getElementById("login-modal");
+        const closeLogin = document.getElementById("close-login");
+        const modalOverlay = document.querySelector(".modal-overlay");
+        
+        const authForm = document.getElementById("auth-form");
+        const authEmail = document.getElementById("auth-email");
+        const authPassword = document.getElementById("auth-password");
+        const authSubmit = document.getElementById("auth-submit");
+        const authToggle = document.getElementById("auth-toggle");
+        const modalTitle = document.getElementById("modal-title");
+        const googleLogin = document.getElementById("google-login");
 
-            setTimeout(() => { splashScreen.classList.add("hide"); }, 2000);
+        const uploadArea = document.getElementById("upload-area");
+        const fileInput = document.getElementById("file-input");
+        const projectPreview = document.getElementById("project-preview");
+        const projectName = document.getElementById("project-name");
+        const deployButton = document.getElementById("deploy-button");
+        const deployResult = document.getElementById("deploy-result");
+        const openProjectBtn = document.getElementById("open-project-btn");
 
-            loginButton.addEventListener("click", () => loginModal.hidden = false);
-            closeLogin.addEventListener("click", () => loginModal.hidden = true);
-            modalOverlay.addEventListener("click", () => loginModal.hidden = true);
+        let isSignUp = false;
+        let selectedFile = null;
+        let fileContent = "";
 
-            browseFiles.addEventListener("click", (e) => { e.stopPropagation(); fileInput.click(); });
-            chooseFolder.addEventListener("click", (e) => { e.stopPropagation(); folderInput.click(); });
+        // إخفاء الـ Splash Screen تلقائياً
+        setTimeout(() => splashScreen.classList.add("hide"), 1500);
 
-            fileInput.addEventListener("change", () => {
-                if (fileInput.files.length) {
-                    currentFile = fileInput.files[0];
-                    projectName.textContent = currentFile.name;
-                    projectPreview.hidden = false;
-                    deployResult.hidden = true;
+        // فتح وإغلاق نافذة التسجيل
+        loginButton.addEventListener("click", () => {
+            if (auth.currentUser) {
+                signOut(auth);
+            } else {
+                loginModal.hidden = false;
+            }
+        });
+        closeLogin.addEventListener("click", () => loginModal.hidden = true);
+        modalOverlay.addEventListener("click", () => loginModal.hidden = true);
+
+        // التبديل بين Sign In و Sign Up
+        authToggle.addEventListener("click", () => {
+            isSignUp = !isSignUp;
+            modalTitle.textContent = isSignUp ? "Sign Up" : "Sign In";
+            authSubmit.textContent = isSignUp ? "Create Account" : "Sign In";
+            authToggle.innerHTML = isSignUp 
+                ? 'Already have an account? <span>Sign In</span>' 
+                : 'Don\'t have an account? <span>Sign Up</span>';
+        });
+
+        // التسجيل بالبريد وكلمة السر
+        authForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            try {
+                if (isSignUp) {
+                    await createUserWithEmailAndPassword(auth, authEmail.value, authPassword.value);
+                } else {
+                    await signInWithEmailAndPassword(auth, authEmail.value, authPassword.value);
                 }
-            });
+                loginModal.hidden = true;
+            } catch (error) {
+                alert("Auth Error: " + error.message);
+            }
+        });
 
-            folderInput.addEventListener("change", () => {
-                if (folderInput.files.length) {
-                    currentFile = folderInput.files[0];
-                    projectName.textContent = folderInput.files[0].webkitRelativePath.split("/")[0] || "Folder";
-                    projectPreview.hidden = false;
-                    deployResult.hidden = true;
-                }
-            });
+        // التسجيل بحساب جوجل
+        googleLogin.addEventListener("click", async () => {
+            try {
+                await signInWithPopup(auth, googleProvider);
+                loginModal.hidden = true;
+            } catch (error) {
+                alert("Google Sign-In Error: " + error.message);
+            }
+        });
 
-            // تحضير النشر ورابط نضيف جداً
-            deployButton.addEventListener("click", () => {
-                if (!currentFile) return;
+        // متابعة حالة المستخِدم
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userDisplay.textContent = user.email.split('@')[0];
+                loginButton.textContent = "Sign Out";
+            } else {
+                userDisplay.textContent = "";
+                loginButton.textContent = "Sign in";
+            }
+        });
 
-                deployButton.textContent = "Deploying...";
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    loadedContent = e.target.result;
-                    
-                    // تغيير نص اللينك ليكون اسم موقعك النظيف
-                    const cleanFileName = currentFile.name.replace('.html', '');
-                    projectLink.textContent = `https://ziad-app.vercel.app/${cleanFileName}`;
-
-                    setTimeout(() => {
-                        deployButton.textContent = "Deploy";
-                        deployResult.hidden = false;
-                    }, 600);
-                };
-
-                reader.readAsText(currentFile);
-            });
-
-            // عند الضغط على اللينك النظيف تفتح الموقع فوراً
-            projectLink.addEventListener("click", (e) => {
-                e.preventDefault();
-                if (!loadedContent) return;
+        // رفع الملف وتخزينه في Firestore
+        uploadArea.addEventListener("click", () => fileInput.click());
+        
+        fileInput.addEventListener("change", () => {
+            if (fileInput.files.length) {
+                selectedFile = fileInput.files[0];
+                projectName.textContent = selectedFile.name;
                 
-                const win = window.open("", "_blank");
-                win.document.write(loadedContent);
-                win.document.close();
-            });
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    fileContent = e.target.result;
+                    projectPreview.hidden = false;
+                    deployResult.hidden = true;
+                };
+                reader.readAsText(selectedFile);
+            }
+        });
+
+        // زر الـ Deploy
+        deployButton.addEventListener("click", async () => {
+            if (!fileContent) return;
+
+            deployButton.textContent = "Deploying...";
+            deployButton.disabled = true;
+
+            try {
+                // حفظ المخرجات مجاناً في قاعدة بيانات Firestore
+                await addDoc(collection(db, "projects"), {
+                    name: selectedFile.name,
+                    user: auth.currentUser ? auth.currentUser.email : "Anonymous",
+                    createdAt: new Date()
+                });
+
+                deployResult.hidden = false;
+            } catch (err) {
+                alert("Deployment failed: " + err.message);
+            } finally {
+                deployButton.textContent = "Deploy";
+                deployButton.disabled = false;
+            }
+        });
+
+        // تشغيل المشروع المرفوع مباشرةً
+        openProjectBtn.addEventListener("click", () => {
+            const win = window.open();
+            win.document.write(fileContent);
+            win.document.close();
         });
     </script>
 </body>
 </html>
+
