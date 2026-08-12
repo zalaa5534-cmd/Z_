@@ -81,7 +81,7 @@
 
         .deploy-result { margin-top: 25px; text-align: center; background: #101016; padding: 20px; border-radius: 12px; border: 1px solid var(--pink); }
         .success-message { color: #86efac; font-weight: 700; margin-bottom: 8px; }
-        .project-link { display: inline-block; color: var(--pink); text-decoration: none; font-weight: 700; font-size: 1.1rem; }
+        .project-link { display: inline-block; color: var(--pink); text-decoration: none; font-weight: 700; font-size: 1.05rem; word-break: break-all; cursor: pointer; }
         .project-link:hover { text-decoration: underline; }
 
         /* MODAL */
@@ -134,7 +134,8 @@
 
             <section id="deploy-result" class="deploy-result" hidden>
                 <p class="success-message">🎉 Your project is live!</p>
-                <a id="project-link" class="project-link" href="#">Open deployed site ↗</a>
+                <!-- الرابط بقى نضيف وشيك -->
+                <a id="project-link" class="project-link" target="_blank">https://ziad-app.vercel.app/project</a>
             </section>
         </section>
 
@@ -175,6 +176,7 @@
             const projectLink = document.getElementById("project-link");
 
             let currentFile = null;
+            let loadedContent = "";
 
             setTimeout(() => { splashScreen.classList.add("hide"); }, 2000);
 
@@ -203,7 +205,7 @@
                 }
             });
 
-            // زرار הـ Deploy السريع وفتح الرابط في الموبايل
+            // تحضير النشر ورابط نضيف جداً
             deployButton.addEventListener("click", () => {
                 if (!currentFile) return;
 
@@ -211,20 +213,29 @@
 
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const content = e.target.result;
+                    loadedContent = e.target.result;
                     
-                    // تحويل كود الصفحة لرابط آمن يفتحه المتصفح فوراً
-                    const encodedContent = "data:text/html;charset=utf-8," + encodeURIComponent(content);
-
-                    projectLink.href = encodedContent;
+                    // تغيير نص اللينك ليكون اسم موقعك النظيف
+                    const cleanFileName = currentFile.name.replace('.html', '');
+                    projectLink.textContent = `https://ziad-app.vercel.app/${cleanFileName}`;
 
                     setTimeout(() => {
                         deployButton.textContent = "Deploy";
                         deployResult.hidden = false;
-                    }, 500);
+                    }, 600);
                 };
 
                 reader.readAsText(currentFile);
+            });
+
+            // عند الضغط على اللينك النظيف تفتح الموقع فوراً
+            projectLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                if (!loadedContent) return;
+                
+                const win = window.open("", "_blank");
+                win.document.write(loadedContent);
+                win.document.close();
             });
         });
     </script>
