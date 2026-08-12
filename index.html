@@ -26,6 +26,7 @@
         button { border: 0; cursor: pointer; }
         .screen { width: 100%; min-height: 100vh; }
 
+        /* SPLASH SCREEN */
         .splash-screen {
             position: fixed; inset: 0; z-index: 9999;
             display: flex; align-items: center; justify-content: center;
@@ -42,6 +43,7 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
+        /* MAIN APP */
         .main-screen { position: relative; display: flex; flex-direction: column; background: radial-gradient(circle at 50% 45%, rgba(236, 72, 153, 0.07), transparent 38%), var(--bg); }
         .top-bar { width: 100%; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; border-bottom: 1px solid var(--border); }
         .small-logo { color: var(--white); font-size: 1.5rem; font-weight: 900; letter-spacing: -0.08em; }
@@ -53,6 +55,7 @@
         .welcome-section h1 { font-size: clamp(1.7rem, 4vw, 2.7rem); font-weight: 800; letter-spacing: -0.03em; }
         .welcome-section p { margin-top: 10px; color: var(--muted); font-size: 1rem; }
 
+        /* UPLOAD CIRCLE */
         .upload-area {
             width: min(430px, 82vw); aspect-ratio: 1 / 1;
             display: flex; align-items: center; justify-content: center;
@@ -67,6 +70,7 @@
         .upload-option:hover { color: var(--pink); transform: scale(1.04); }
         .upload-or { margin: 10px 0; color: var(--muted); font-size: 0.9rem; font-weight: 500; }
 
+        /* PREVIEW & RESULT */
         .project-preview { width: min(560px, 90vw); margin-top: 35px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25); }
         .project-info { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
         .project-label { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; }
@@ -80,6 +84,7 @@
         .project-link { display: inline-block; color: var(--pink); text-decoration: none; font-weight: 700; font-size: 1.1rem; }
         .project-link:hover { text-decoration: underline; }
 
+        /* MODAL */
         .modal { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .modal[hidden] { display: none; }
         .modal-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(10px); }
@@ -129,7 +134,7 @@
 
             <section id="deploy-result" class="deploy-result" hidden>
                 <p class="success-message">🎉 Your project is live!</p>
-                <a id="project-link" class="project-link" href="#" target="_blank">Open deployed site ↗</a>
+                <a id="project-link" class="project-link" href="#">Open deployed site ↗</a>
             </section>
         </section>
 
@@ -192,13 +197,13 @@
             folderInput.addEventListener("change", () => {
                 if (folderInput.files.length) {
                     currentFile = folderInput.files[0];
-                    projectName.textContent = currentFile.webkitRelativePath.split("/")[0] || "Folder";
+                    projectName.textContent = folderInput.files[0].webkitRelativePath.split("/")[0] || "Folder";
                     projectPreview.hidden = false;
                     deployResult.hidden = true;
                 }
             });
 
-            // التشغيل الحقيقي لزرار الـ Deploy! 🚀
+            // زرار הـ Deploy السريع وفتح الرابط في الموبايل
             deployButton.addEventListener("click", () => {
                 if (!currentFile) return;
 
@@ -207,15 +212,16 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const content = e.target.result;
-                    const blob = new Blob([content], { type: 'text/html' });
-                    const blobUrl = URL.createObjectURL(blob);
-
-                    projectLink.href = blobUrl;
                     
+                    // تحويل كود الصفحة لرابط آمن يفتحه المتصفح فوراً
+                    const encodedContent = "data:text/html;charset=utf-8," + encodeURIComponent(content);
+
+                    projectLink.href = encodedContent;
+
                     setTimeout(() => {
                         deployButton.textContent = "Deploy";
                         deployResult.hidden = false;
-                    }, 1000);
+                    }, 500);
                 };
 
                 reader.readAsText(currentFile);
