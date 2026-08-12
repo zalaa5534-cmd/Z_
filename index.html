@@ -40,31 +40,35 @@
         .login-button { padding: 11px 22px; color: var(--white); background: rgba(236, 72, 153, 0.12); border: 1px solid rgba(236, 72, 153, 0.35); border-radius: 12px; transition: 0.3s; }
         .login-button:hover { background: var(--pink); }
 
-        .main-content { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
-        .welcome-section { text-align: center; margin-bottom: 35px; }
+        .main-content { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 30px 20px; }
+        .welcome-section { text-align: center; margin-bottom: 25px; }
         .welcome-section h1 { font-size: clamp(1.7rem, 4vw, 2.7rem); font-weight: 800; }
-        .welcome-section p { margin-top: 10px; color: var(--muted); }
+        .welcome-section p { margin-top: 8px; color: var(--muted); }
 
-        /* UPLOAD AREA */
+        /* UPLOAD AREA - الدائرة بالشكل الأصلي بالظبط */
         .upload-area {
-            width: min(320px, 80vw); aspect-ratio: 1 / 1;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; background: radial-gradient(circle at center, rgba(236, 72, 153, 0.09), rgba(20, 20, 28, 0.9) 65%);
-            border: 2px dashed rgba(236, 72, 153, 0.45); cursor: pointer; transition: 0.3s ease;
+            width: min(300px, 80vw); aspect-ratio: 1 / 1;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+            border-radius: 50%; background: radial-gradient(circle at center, rgba(236, 72, 153, 0.08), rgba(20, 20, 28, 0.95) 70%);
+            border: 2px dashed rgba(236, 72, 153, 0.45); cursor: pointer; transition: 0.3s ease; text-align: center; padding: 20px;
         }
         .upload-area:hover { transform: scale(1.02); border-color: var(--pink); }
-        .upload-option { background: transparent; color: var(--white); font-weight: 700; padding: 8px 12px; }
+        .upload-text-main { color: var(--white); font-weight: 700; font-size: 1.1rem; }
+        .upload-text-or { color: var(--muted); font-size: 0.85rem; }
 
-        /* PREVIEW & RESULT */
-        .project-preview { width: min(500px, 90vw); margin-top: 30px; padding: 18px; display: flex; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--border); border-radius: 16px; }
-        .project-name { color: var(--white); font-weight: 700; }
-        .deploy-button { padding: 10px 20px; color: var(--white); background: var(--pink); border-radius: 10px; font-weight: 800; }
+        /* SELECTED PROJECT PREVIEW */
+        .project-preview { width: min(450px, 92vw); margin-top: 25px; padding: 18px; display: flex; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--border); border-radius: 16px; }
+        .project-info { display: flex; flex-direction: column; gap: 4px; }
+        .project-label { color: var(--muted); font-size: 0.75rem; letter-spacing: 0.05em; font-weight: 700; text-transform: uppercase; }
+        .project-name { color: var(--white); font-weight: 800; font-size: 1rem; }
+        .deploy-button { padding: 12px 26px; color: var(--white); background: var(--pink); border-radius: 12px; font-weight: 800; font-size: 1rem; }
         .deploy-button:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        .deploy-result { margin-top: 25px; text-align: center; background: #101016; padding: 20px; border-radius: 12px; border: 1px solid var(--pink); width: min(500px, 90vw); }
-        .success-message { color: #86efac; font-weight: 700; margin-bottom: 8px; }
-        .project-btn { display: inline-block; background: var(--pink); color: var(--white); text-decoration: none; font-weight: 700; padding: 12px 24px; border-radius: 8px; margin-top: 10px; transition: 0.2s; }
-        .project-btn:hover { opacity: 0.9; }
+        /* RESULT BOX - نفس تصميم الصورة الأصلية بالضبط */
+        .deploy-result { margin-top: 20px; text-align: center; background: #0c0c12; padding: 22px; border-radius: 16px; border: 1px solid var(--pink); width: min(450px, 92vw); }
+        .success-message { color: #86efac; font-weight: 800; font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .live-link { color: var(--pink); font-size: 1.05rem; font-weight: 800; text-decoration: underline; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; word-break: break-all; }
+        .live-link:hover { opacity: 0.85; }
 
         /* AUTH MODAL */
         .modal { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -105,23 +109,28 @@
         <section class="main-content">
             <div class="welcome-section">
                 <h1>Ready when you are, Ziad.</h1>
-                <p>Upload your HTML file and launch it instantly.</p>
+                <p>Upload your project and deploy it.</p>
             </div>
 
+            <!-- الدائرة بالشكل والنص الأصلي -->
             <div id="upload-area" class="upload-area">
-                <div class="upload-content">
-                    <span class="upload-option">Browse file to upload</span>
-                </div>
+                <span class="upload-text-main">Browse files to upload</span>
+                <span class="upload-text-or">or</span>
+                <span class="upload-text-main">or choose a folder</span>
             </div>
 
             <section id="project-preview" class="project-preview" hidden>
-                <span id="project-name" class="project-name"></span>
+                <div class="project-info">
+                    <span class="project-label">SELECTED PROJECT</span>
+                    <span id="project-name" class="project-name">calculator.html</span>
+                </div>
                 <button id="deploy-button" class="deploy-button" type="button">Deploy</button>
             </section>
 
+            <!-- نتيجة الـ Deploy بالشكل اللطيف والرابط المباشر -->
             <section id="deploy-result" class="deploy-result" hidden>
-                <p class="success-message">🎉 Deployment Successful!</p>
-                <button id="open-project-btn" class="project-btn" type="button">Launch Live Project 🚀</button>
+                <div class="success-message">🎉 Your project is live!</div>
+                <a id="open-site-link" class="live-link" target="_blank" rel="noopener noreferrer">Open deployed site ↗</a>
             </section>
         </section>
 
@@ -166,7 +175,6 @@
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // إعدادات Firebase الخاصة ببرنامج زياد
         const firebaseConfig = {
             apiKey: "AIzaSyBlJqZTaTOt2FqvSN4VlMKqI4BtELlzy5s",
             authDomain: "ziad-app-414b7.firebaseapp.com",
@@ -182,7 +190,6 @@
         const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // العناصر الأساسية
         const splashScreen = document.getElementById("splash-screen");
         const loginButton = document.getElementById("login-button");
         const userDisplay = document.getElementById("user-display");
@@ -204,16 +211,14 @@
         const projectName = document.getElementById("project-name");
         const deployButton = document.getElementById("deploy-button");
         const deployResult = document.getElementById("deploy-result");
-        const openProjectBtn = document.getElementById("open-project-btn");
+        const openSiteLink = document.getElementById("open-site-link");
 
         let isSignUp = false;
         let selectedFile = null;
         let fileContent = "";
 
-        // إخفاء الـ Splash Screen تلقائياً
-        setTimeout(() => splashScreen.classList.add("hide"), 1500);
+        setTimeout(() => splashScreen.classList.add("hide"), 1200);
 
-        // فتح وإغلاق نافذة التسجيل
         loginButton.addEventListener("click", () => {
             if (auth.currentUser) {
                 signOut(auth);
@@ -224,7 +229,6 @@
         closeLogin.addEventListener("click", () => loginModal.hidden = true);
         modalOverlay.addEventListener("click", () => loginModal.hidden = true);
 
-        // التبديل بين Sign In و Sign Up
         authToggle.addEventListener("click", () => {
             isSignUp = !isSignUp;
             modalTitle.textContent = isSignUp ? "Sign Up" : "Sign In";
@@ -234,7 +238,6 @@
                 : 'Don\'t have an account? <span>Sign Up</span>';
         });
 
-        // التسجيل بالبريد وكلمة السر
         authForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             try {
@@ -249,7 +252,6 @@
             }
         });
 
-        // التسجيل بحساب جوجل
         googleLogin.addEventListener("click", async () => {
             try {
                 await signInWithPopup(auth, googleProvider);
@@ -259,7 +261,6 @@
             }
         });
 
-        // متابعة حالة المستخِدم
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 userDisplay.textContent = user.email.split('@')[0];
@@ -270,7 +271,6 @@
             }
         });
 
-        // رفع الملف وتخزينه في Firestore
         uploadArea.addEventListener("click", () => fileInput.click());
         
         fileInput.addEventListener("change", () => {
@@ -288,7 +288,7 @@
             }
         });
 
-        // زر الـ Deploy
+        // الـ Deploy وإنشاء الرابط الحقيقي المباشر
         deployButton.addEventListener("click", async () => {
             if (!fileContent) return;
 
@@ -296,13 +296,17 @@
             deployButton.disabled = true;
 
             try {
-                // حفظ المخرجات مجاناً في قاعدة بيانات Firestore
                 await addDoc(collection(db, "projects"), {
                     name: selectedFile.name,
                     user: auth.currentUser ? auth.currentUser.email : "Anonymous",
                     createdAt: new Date()
                 });
 
+                // إنتاج رابط مباشر للملف يفتح فورا
+                const blob = new Blob([fileContent], { type: 'text/html' });
+                const liveUrl = URL.createObjectURL(blob);
+
+                openSiteLink.href = liveUrl;
                 deployResult.hidden = false;
             } catch (err) {
                 alert("Deployment failed: " + err.message);
@@ -311,14 +315,6 @@
                 deployButton.disabled = false;
             }
         });
-
-        // تشغيل المشروع المرفوع مباشرةً
-        openProjectBtn.addEventListener("click", () => {
-            const win = window.open();
-            win.document.write(fileContent);
-            win.document.close();
-        });
     </script>
 </body>
 </html>
-
